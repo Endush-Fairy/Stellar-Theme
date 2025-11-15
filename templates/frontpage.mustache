@@ -1,0 +1,795 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost/drawers
+
+    Boost drawer template.
+
+    Context variables required for this template:
+    * sitename - The name of the site
+    * output - The core renderer for the page
+    * bodyattributes - attributes for the body tag as a string of html attributes
+    * sidepreblocks - HTML for the blocks
+    * hasblocks - true if there are blocks on this page
+    * courseindexopen - true if the nav drawer should be open on page load
+    * regionmainsettingsmenu - HTML for the region main settings menu
+    * hasregionmainsettingsmenu - There is a region main settings menu on this page.
+
+    Example context (json):
+    {
+        "sitename": "Moodle",
+        "output": {
+            "doctype": "<!DOCTYPE html>",
+            "page_title": "Test page",
+            "favicon": "favicon.ico",
+            "main_content": "<h1>Headings make html validators happier</h1>"
+         },
+        "bodyattributes":"",
+        "sidepreblocks": "<h2>Blocks html goes here</h2>",
+        "hasblocks":true,
+        "courseindexopen": true,
+        "navdraweropen": false,
+        "blockdraweropen": true,
+        "regionmainsettingsmenu": "",
+        "hasregionmainsettingsmenu": false,
+        "addblockbutton": ""
+    }
+}}
+{{> theme_boost/head }}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<body {{{ bodyattributes }}}>
+{{> core/local/toast/wrapper}}
+<div id="page-wrapper" class="d-print-block">
+
+    {{{ output.standard_top_of_body_html }}}
+{{> theme_stellar/frontnavbar }}
+    {{#courseindex}}
+        {{< theme_boost/drawer }}
+            {{$id}}theme_boost-drawers-courseindex{{/id}}
+            {{$drawerheadercontent}}
+                {{> theme_boost/courseindexdrawercontrols}}
+            {{/drawerheadercontent}}
+            {{$drawerclasses}}drawer drawer-left {{#courseindexopen}}show{{/courseindexopen}}{{/drawerclasses}}
+            {{$drawercontent}}
+                {{{courseindex}}}
+            {{/drawercontent}}
+            {{$drawerpreferencename}}drawer-open-index{{/drawerpreferencename}}
+            {{$drawerstate}}show-drawer-left{{/drawerstate}}
+            {{$tooltipplacement}}right{{/tooltipplacement}}
+            {{$closebuttontext}}{{#str}}closecourseindex, core{{/str}}{{/closebuttontext}}
+        {{/ theme_boost/drawer}}
+    {{/courseindex}}
+    {{#hasblocks}}
+        {{< theme_boost/drawer }}
+            {{$id}}theme_boost-drawers-blocks{{/id}}
+            {{$drawerclasses}}drawer drawer-right{{#blockdraweropen}} show{{/blockdraweropen}}{{/drawerclasses}}
+            {{$drawercontent}}
+                <div class="d-print-none">
+                    {{{ addblockbutton }}}
+                    {{{ sidepreblocks }}}
+                </div>
+            {{/drawercontent}}
+            {{$drawerpreferencename}}drawer-open-block{{/drawerpreferencename}}
+            {{$forceopen}}{{#forceblockdraweropen}}1{{/forceblockdraweropen}}{{/forceopen}}
+            {{$drawerstate}}show-drawer-right{{/drawerstate}}
+            {{$tooltipplacement}}left{{/tooltipplacement}}
+            {{$drawercloseonresize}}1{{/drawercloseonresize}}
+            {{$closebuttontext}}{{#str}}closeblockdrawer, core{{/str}}{{/closebuttontext}}
+        {{/ theme_boost/drawer}}
+    {{/hasblocks}}
+    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container">
+        <div id="topofscroll" class="main-inner">
+            <div class="drawer-toggles d-flex">
+                {{#courseindex}}
+                    <div class="drawer-toggler drawer-left-toggle open-nav d-print-none">
+                        <button
+                            class="btn icon-no-margin"
+                            data-toggler="drawers"
+                            data-action="toggle"
+                            data-target="theme_boost-drawers-courseindex"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="right"
+                            title="{{#str}}opendrawerindex, core{{/str}}"
+                        >
+                            <span class="visually-hidden">{{#str}}opendrawerindex, core{{/str}}</span>
+                            {{#pix}} t/index_drawer, moodle {{/pix}}
+                        </button>
+                    </div>
+                {{/courseindex}}
+                {{#hasblocks}}
+                    <div class="drawer-toggler drawer-right-toggle ms-auto d-print-none">
+                        <button
+                            class="btn icon-no-margin"
+                            data-toggler="drawers"
+                            data-action="toggle"
+                            data-target="theme_boost-drawers-blocks"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="right"
+                            title="{{#str}}opendrawerblocks, core{{/str}}"
+                        >
+                            <span class="visually-hidden">{{#str}}opendrawerblocks, core{{/str}}</span>
+                            <span class="dir-rtl-hide">{{#pix}}t/blocks_drawer, core{{/pix}}</span>
+                            <span class="dir-ltr-hide">{{#pix}}t/blocks_drawer_rtl, core{{/pix}}</span>
+                        </button>
+                    </div>
+                {{/hasblocks}}
+            </div>
+            {{{ output.full_header }}}
+            {{#secondarymoremenu}}
+                <div class="secondary-navigation d-print-none">
+                    {{> core/moremenu}}
+                </div>
+            {{/secondarymoremenu}}
+            <div class="hero-banner-container container-fluid p-0">
+    <div class="row g-0 w-100">
+        <div class="col-lg-7 hero-left-panel">
+            <div class="hero-content">
+                <div class="animated-heading-container">
+                    <div class="animated-heading-wrapper">
+                        {{#highlights}}
+                        <h1 class="animated-heading-item">{{.}}</h1>
+                        {{/highlights}}
+                    </div>
+                </div>
+
+                <p>{{#str}} heroparagraph, theme_stellar {{/str}}</p>
+
+                <div class="hero-buttons">
+                    <a href="{{{wwwroot}}}/request-details/" class="btn btn-light">{{#str}} request_details, theme_stellar {{/str}}</a>
+                    <a href="{{{wwwroot}}}/orientation-form/" class="btn btn-light">{{#str}} book_orientation, theme_stellar {{/str}}</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5 hero-right-panel">
+            <img src="{{wwwroot}}/theme/stellar/pix/hero-img.jpg"
+                alt="Chicago Skyline" class="hero-single-image">
+        </div>
+    </div>
+</div>
+
+<div class="container certificate">
+    <div class="image-wrapper">
+        <img src="{{wwwroot}}/theme/stellar/pix/certificate.png" alt="Image 1" loading="lazy">
+    </div>
+</div>
+
+<section class="news-blogs-container">
+
+    <article class="info-card">
+        <header class="card-header">
+            <h2>{{#str}} latest_news, theme_stellar {{/str}}</h2>
+        </header>
+        <div class="card-body blog">
+            <div class="article-item">
+                <a href="{{{wwwroot}}}/2025/06/02/book-your-orientation-virtual-or-in-person-today/"><img src="{{wwwroot}}/theme/stellar/pix/Flyer-2.png" alt="Book Your Orientation Today flyer"></a>
+                <a href="{{{wwwroot}}}/2025/06/02/book-your-orientation-virtual-or-in-person-today/">{{#str}} news1, theme_stellar {{/str}}</a>
+            </div>
+            <div class="article-item">
+                <a href="{{{wwwroot}}}/2025/06/02/meet-greet-highlights/"><img src="{{wwwroot}}/theme/stellar/pix/Flyer-1.png"
+                        alt="Group of people at a Meet & Greet event/"></a>
+                <a href="{{{wwwroot}}}/2025/06/02/meet-greet-highlights/">{{#str}} news2, theme_stellar {{/str}}</a>
+            </div>
+            <div class="article-item">
+                <a href="{{{wwwroot}}}/2025/02/13/radiology-registry-arrt-review-course/"><img src="{{wwwroot}}/theme/stellar/pix/avc1.jpg"
+                        alt="Free Radiology Registry (ARRT) Review Course flyer"></a>
+                <a href="{{{wwwroot}}}/2025/02/13/radiology-registry-arrt-review-course/">{{#str}} news3, theme_stellar {{/str}}</a>
+            </div>
+        </div>
+    </article>
+
+    <article class="info-card">
+        <header class="card-header">
+            <h2>{{#str}} latest_blogs, theme_stellar {{/str}}</h2>
+        </header>
+        <div class="card-body blog">
+            <div class="article-item">
+                <a href="{{{wwwroot}}}/2025/03/25/how-ai-is-transforming-healthcare"><img src="{{wwwroot}}/theme/stellar/pix/team.jpg"
+                        alt="Medical professionals in a clinical setting"></a>
+                <a href="{{{wwwroot}}}/2025/03/25/how-ai-is-transforming-healthcare">{{#str}} blog1, theme_stellar {{/str}}</a>
+            </div>
+            <div class="article-item">
+                <a href="{{{wwwroot}}}/2024/09/02/best-colleges-for-health-care-careers-at-stellar-career-college-in-chicago/"><img src="{{wwwroot}}/theme/stellar/pix/team2.jpg"
+                        alt="Students and staff posing for a group photo"></a>
+                <a href="{{{wwwroot}}}/2024/09/02/best-colleges-for-health-care-careers-at-stellar-career-college-in-chicago/">{{#str}} blog2, theme_stellar {{/str}}</a>
+            </div>
+            <div class="article-item">
+                <a href="{{{wwwroot}}}/2024/09/02/dialysis-technologist-with-phlebotomy-technician-a-stellar-career-path/"><img src="{{wwwroot}}/theme/stellar/pix/Dialysis.jpg"
+                        alt="Dialysis Technologist with Phlebotomy Technician flyer"></a>
+                <a href="{{{wwwroot}}}/2024/09/02/dialysis-technologist-with-phlebotomy-technician-a-stellar-career-path/">{{#str}} blog3, theme_stellar {{/str}}</a>
+            </div>
+        </div>
+    </article>
+
+</section>
+
+<section class="stellar-video-section">
+    <div class="stellar-video-wrapper">
+        <video autoplay loop muted playsinline controlslist="nodownload">
+            <source src="{{wwwroot}}/theme/stellar/pix/1st-Black-and-White.mp4" type="video/mp4">
+            {{#str}} video_error, theme_stellar {{/str}}
+        </video>
+    </div>
+</section>
+
+<section class="custom-ql-section" aria-label="Quick Links">
+    <div class="custom-ql-container">
+
+        <a href="{{{wwwroot}}}/our-training-programs/" class="custom-ql-item">
+            <div class="custom-ql-icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="custom-ql-label">{{#str}} programs, theme_stellar {{/str}}</div>
+        </a>
+
+        <a href="{{{wwwroot}}}/orientation-form/" class="custom-ql-item">
+            <div class="custom-ql-icon">
+                <i class="fas fa-book-reader"></i>
+            </div>
+            <div class="custom-ql-label">{{#str}} book_an_orientation, theme_stellar {{/str}}</div>
+        </a>
+
+        <a href="{{{wwwroot}}}/request-details/" class="custom-ql-item">
+            <div class="custom-ql-icon">
+                <i class="fas fa-desktop"></i>
+            </div>
+            <div class="custom-ql-label">{{#str}} request_info, theme_stellar {{/str}}</div>
+        </a>
+
+        <a href="{{{wwwroot}}}/apply-online/" class="custom-ql-item">
+            <div class="custom-ql-icon">
+                <i class="fas fa-mouse"></i>
+            </div>
+            <div class="custom-ql-label">{{#str}} apply_now, theme_stellar {{/str}}</div>
+        </a>
+
+    </div>
+</section>
+
+<div class="video-hero">
+    <div class="video-container">
+        <video autoplay loop muted playsinline controlslist="nodownload">
+            <source src="{{wwwroot}}/theme/stellar/pix/Black-White-Abstract-Color-and-Style-Video-Background-12.mp4"
+                type="video/mp4">
+            {{#str}} video_error, theme_stellar {{/str}}
+        </video>
+    </div>
+
+    <div class="button-container">
+        <a href="{{{wwwroot}}}/about/" class="hero-btn">{{#str}} aboutus, theme_stellar {{/str}}</a>
+        <a href="" class="hero-btn">{{#str}} virtual_tour, theme_stellar {{/str}}</a>
+    </div>
+</div>
+<section class="alumni-spotlight first" aria-label="Alumni success story">
+    <div class="alumni-grid alumni-grid--red">
+        <div class="alumni-media-column">
+            <img src="{{wwwroot}}/theme/stellar/pix/Student.jpg" alt="Portrait of Joshua Klenz" class="alumni-portrait">
+        </div>
+
+        <div class="alumni-content-column">
+            <p class="alumni-subheader">{{#str}} our_graduates, theme_stellar {{/str}}</p>
+            <blockquote class="alumni-testimonial">
+                {{#str}} testimonial1, theme_stellar {{/str}}
+            </blockquote>
+            <p class="alumni-credential">
+                <span class="alumni-credential__name">{{#str}} alumni1, theme_stellar {{/str}}</span>
+            </p>
+            <a href="{{{wwwroot}}}/success-stories/" class="alumni-cta">{{#str}} read_more_success, theme_stellar {{/str}}
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="alumni-spotlight second" aria-label="Faculty highlight">
+    <div class="alumni-grid alumni-grid--gray alumni-grid--image-right">
+        <div class="alumni-media-column">
+            <img src="{{wwwroot}}/theme/stellar/pix/Student2.jpeg" alt="Portrait of Dr. Sarah Johnson"
+                class="alumni-portrait">
+        </div>
+
+        <div class="alumni-content-column">
+            <p class="alumni-subheader">{{#str}} our_graduates, theme_stellar {{/str}}</p>
+            <blockquote class="alumni-testimonial">
+                {{#str}} testimonial2, theme_stellar {{/str}}
+            </blockquote>
+            <p class="alumni-credential">
+                <span class="alumni-credential__name">{{#str}} alumni2, theme_stellar {{/str}}</span>
+            </p>
+            <a href="{{{wwwroot}}}/success-stories/" class="alumni-cta">{{#str}} read_more_success, theme_stellar {{/str}}</a>
+        </div>
+    </div>
+</section>
+
+<section class="programs-section">
+    <div class="programs-container">
+
+        <div class="program-column">
+            <h2 class="section-title">{{#str}} health_care, theme_stellar {{/str}}</h2>
+
+            <div class="swiper program-slider">
+                <div class="swiper-wrapper">
+
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{wwwroot}}/theme/stellar/pix/IMG_7003.jpg"
+                                alt="A student using an ultrasound machine">
+                            <div class="card-content">
+                                <h3 class="card-title">{{#str}} mri, theme_stellar {{/str}}</h3>
+                                <p class="card-details">{{#str}} mri_duration, theme_stellar {{/str}}</p>
+                                <p class="card-details">{{#str}} mri_hours, theme_stellar {{/str}}</p>
+                                <p class="card-description slider">
+                                    {{#str}} mri_description, theme_stellar {{/str}}
+                                </p>
+                                <a href="{{{wwwroot}}}/magnetic-resonance-imaging-mri-technologistnew/" class="read-more">{{#str}} read_more, theme_stellar {{/str}}</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{wwwroot}}/theme/stellar/pix/Raneice.jpg"
+                                alt="A student using an ultrasound machine">
+                            <div class="card-content">
+                                <h3 class="card-title">{{#str}} medical_assistant, theme_stellar {{/str}}</h3>
+                                <p class="card-details">{{#str}} medical_assistant_duration, theme_stellar {{/str}}</p>
+                                <p class="card-details">{{#str}} medical_assistant_hours, theme_stellar {{/str}}</p>
+                                <p class="card-description slider">
+                                    {{#str}} medical_assistant_description, theme_stellar {{/str}}
+                                </p>
+                                <a href="{{{wwwroot}}}/medical-assisting-program-with-phlebotomy-technician/" class="read-more">{{#str}} read_more, theme_stellar {{/str}}</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{wwwroot}}/theme/stellar/pix/IMG_7003.jpg"
+                                alt="A student using an ultrasound machine">
+                            <div class="card-content">
+                                <h3 class="card-title">{{#str}} medical_assistant, theme_stellar {{/str}}</h3>
+                                <p class="card-details">{{#str}} medical_assistant_duration, theme_stellar {{/str}}</p>
+                                <p class="card-details">{{#str}} medical_assistant_hours, theme_stellar {{/str}}</p>
+                                <p class="card-description slider">
+                                    {{#str}} dental_assistant_description, theme_stellar {{/str}}
+                                </p>
+                                <a href="#" class="read-more">{{#str}} read_more, theme_stellar {{/str}}</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+
+        <div class="program-column">
+            <h2 class="section-title">{{#str}} it, theme_stellar {{/str}}</h2>
+            <div class="program-card">
+                <img src="{{wwwroot}}/theme/stellar/pix/Jasmine-Young.jpg" alt="A student holding a certificate">
+                <div class="card-content">
+                    <h3 class="card-title">{{#str}} cyber_security, theme_stellar {{/str}}</h3>
+                    <p class="card-details">{{#str}} cyber_security_duration, theme_stellar {{/str}}</p>
+                    <p class="card-description slider">
+                        {{#str}} cyber_security_description, theme_stellar {{/str}}
+                    </p>
+                    <a href="{{{wwwroot}}}/cyber-security/" class="read-more">{{#str}} read_more, theme_stellar {{/str}}</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="info-section">
+    <div class="info-container">
+
+        <div class="info-card blog">
+            <a href="{{{wwwroot}}}/2025/06/02/book-your-orientation-virtual-or-in-person-today/" class="card-image-link">
+                <img src="{{wwwroot}}/theme/stellar/pix/avc.jpg" alt="Book Your Orientation Today graphic">
+            </a>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="{{{wwwroot}}}/2025/06/02/book-your-orientation-virtual-or-in-person-today/">{{#str}} news1, theme_stellar {{/str}}</a>
+                </h3>
+                <p class="card-description">
+                    {{#str}} book_an_orienation_description, theme_stellar {{/str}}
+                </p>
+                <a href="{{{wwwroot}}}/2025/06/02/book-your-orientation-virtual-or-in-person-today/" class="read-more info">{{#str}} read_more, theme_stellar {{/str}}→</a>
+            </div>
+        </div>
+
+        <div class="info-card blog">
+            <a href="{{{wwwroot}}}/2025/06/02/meet-greet-highlights/" class="card-image-link">
+                <img src="{{wwwroot}}/theme/stellar/pix/Meet-and-greet.jpg"
+                    alt="Group of people at a Meet & Greet event">
+            </a>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="{{{wwwroot}}}/2025/06/02/meet-greet-highlights/">{{#str}} news2, theme_stellar {{/str}}</a>
+                </h3>
+                <p class="card-description">
+                    {{#str}} meet_greet_description, theme_stellar {{/str}}
+                </p>
+                <a href="{{{wwwroot}}}/2025/06/02/meet-greet-highlights/" class="read-more info">{{#str}} read_more, theme_stellar {{/str}} →</a>
+            </div>
+        </div>
+
+        <div class="info-card blog">
+            <a href="{{{wwwroot}}}/2025/03/25/how-ai-is-transforming-healthcare/" class="card-image-link">
+                <img src="{{wwwroot}}/theme/stellar/pix/IMG_7078.jpg"
+                    alt="Healthcare students in a training room with a medical manikin">
+            </a>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="{{{wwwroot}}}/2025/03/25/how-ai-is-transforming-healthcare/">{{#str}} blog1, theme_stellar {{/str}}</a>
+                </h3>
+                <p class="card-description">
+                    {{#str}} ai_description, theme_stellar {{/str}}
+                </p>
+                <a href="{{{wwwroot}}}/2025/03/25/how-ai-is-transforming-healthcare/" class="read-more info">{{#str}} read_more, theme_stellar {{/str}} →</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="award-contact-section">
+    <div class="container-certificate">
+
+        <div class="content-column">
+            <div class="content-box">
+                <img src="{{wwwroot}}/theme/stellar/pix/SCC-President.jpg"
+                    alt="Three men holding an award certificate from ACCSC">
+                <h3>{{#str}} assc_heading, theme_stellar {{/str}}</h3>
+                <p>{{#str}} assc_paragraph1, theme_stellar {{/str}}</p>
+                <p>{{#str}} assc_paragraph2, theme_stellar {{/str}}</p>
+            </div>
+        </div>
+
+        <div class="form-column">
+            <form class="contact-form" action="process_form.php" method="post">
+                <h2>{{#str}} haveaquestion, theme_stellar {{/str}}</h2>
+                <div class="form-group">
+                    <label for="name" class="sr-only">{{#str}} name {{/str}}*</label>
+                    <input type="text" id="name" name="name"
+                        placeholder="{{#str}} nameplaceholder, theme_stellar {{/str}}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="sr-only">{{#str}} email {{/str}}*</label>
+                    <input type="email" id="email" name="email"
+                        placeholder="{{#str}} emailplaceholder, theme_stellar {{/str}}" required>
+                </div>
+
+                <div class="form-group phone-input-group">
+                    <select name="country_code" aria-label="Country Code" required>
+                        {{#country_codes}}
+                        <option value="{{value}}" {{#selected}}selected{{/selected}}>{{label}}</option>
+                        {{/country_codes}}
+                    </select>
+                    <label for="phone" class="sr-only">{{#str}} phone {{/str}}*</label>
+                    <input type="tel" id="phone" name="phone"
+                        placeholder="{{#str}} phoneplaceholder, theme_stellar {{/str}}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="program" class="sr-only">{{#str}} selectaprogram, theme_stellar {{/str}}*</label>
+                    <select id="program" name="program" required>
+                        <option value="" disabled selected>{{#str}} selectaprogram, theme_stellar {{/str}}</option>
+                        {{#programs}}
+                        <option value="{{.}}">{{.}}</option>
+                        {{/programs}}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="campus" class="sr-only">{{#str}} selectcampus, theme_stellar {{/str}}*</label>
+                    <select id="campus" name="campus" required>
+                        <option value="" disabled selected>{{#str}} selectcampus, theme_stellar {{/str}}</option>
+                        {{#campuses}}
+                        <option value="{{.}}">{{.}}</option>
+                        {{/campuses}}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message" class="sr-only">{{#str}} message {{/str}}</label>
+                    <textarea id="message" name="message" rows="5"
+                        placeholder="{{#str}} messageplaceholder, theme_stellar {{/str}}"></textarea>
+                </div>
+
+                <div class="form-group terms-group">
+                    <input type="checkbox" id="terms" name="agree" required>
+                    <label for="terms">{{#str}} agreepolicy, theme_stellar {{/str}} <a
+                            href="{{{ config.wwwroot }}}/termsandpolicies">{{#str}} termsandpolicies, theme_stellar
+                            {{/str}}</a></label>
+                </div>
+
+                <div class="form-group recaptcha-group">
+                    {{{ recaptcha }}}
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="submit-btn">{{#str}} submit {{/str}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+  <section class="gallery-section">
+        <h2 class="gallery-title">{{#str}} graduation_ceremony, theme_stellar {{/str}}</h2>
+        
+        <div class="photo-gallery-slider-container">
+            <div class="swiper photo-gallery-slider"> 
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="{{wwwroot}}/theme/stellar/pix/1-2.jpg">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="{{wwwroot}}/theme/stellar/pix/2-2.jpg">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="{{wwwroot}}/theme/stellar/pix/3-2.jpg">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="{{wwwroot}}/theme/stellar/pix/4-2.jpg">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="{{wwwroot}}/theme/stellar/pix/5-2.jpg">
+                    </div>
+
+                    <div class="swiper-slide">
+                        <img src="{{wwwroot}}/theme/stellar/pix/6-2.jpg">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="{{wwwroot}}/theme/stellar/pix/7-2.jpg">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="{{wwwroot}}/theme/stellar/pix/8-2.jpg">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="{{wwwroot}}/theme/stellar/pix/9.jpg">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="{{wwwroot}}/theme/stellar/pix/10.jpg">
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+    </section>
+
+     <section class="testimonial-section">
+        <div class="container">
+            <h2 class="testimonial-title">{{#str}} scc_achievements, theme_stellar {{/str}}</h2>
+
+            <div class="achievements-slider">
+                <div class="swiper testimonial-swiper">
+                    <div class="swiper-wrapper">
+
+                        <div class="swiper-slide testimonial">
+                            <div class="testimonial-card">
+                                <h3 class="author">{{#str}} author1, theme_stellar {{/str}}</h3>
+                                <p class="text">{{#str}} author1_text, theme_stellar {{/str}}</p>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide testimonial">
+                            <div class="testimonial-card">
+                                <h3 class="author">{{#str}} author2, theme_stellar {{/str}}</h3>
+                                <p class="text">{{#str}} author2_text, theme_stellar {{/str}}</p>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide testimonial">
+                            <div class="testimonial-card">
+                                <h3 class="author">{{#str}} author3, theme_stellar {{/str}}</h3>
+                                <p class="text">{{#str}} author3_text, theme_stellar {{/str}}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="swiper-slide testimonial">
+                            <div class="testimonial-card">
+                                <h3 class="author">{{#str}} author4, theme_stellar {{/str}}</h3>
+                                <p class="text">{{#str}} author4_text, theme_stellar {{/str}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                
+                <div class="swiper-pagination"></div>
+
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+    </section>
+         <section class="cta-section">
+        <a href="{{{wwwroot}}}/apply-online/" class="cta-button">{{#str}} apply_online, theme_stellar {{/str}}</a>
+    </section>
+            <div id="page-content" class="pb-3 d-print-block">
+                <div id="region-main-box">
+                    {{#hasregionmainsettingsmenu}}
+                    <div id="region-main-settings-menu" class="d-print-none">
+                        <div> {{{ regionmainsettingsmenu }}} </div>
+                    </div>
+                    {{/hasregionmainsettingsmenu}}
+                    <div id="region-main">
+
+                        {{#hasregionmainsettingsmenu}}
+                            <div class="region_main_settings_menu_proxy"></div>
+                        {{/hasregionmainsettingsmenu}}
+                        {{{ output.course_content_header }}}
+                        {{#headercontent}}
+                            {{> core/activity_header }}
+                        {{/headercontent}}
+                        {{#overflow}}
+                            <div class="container-fluid tertiary-navigation">
+                                <div class="navitem">
+                                    {{> core/url_select}}
+                                </div>
+                            </div>
+                        {{/overflow}}
+                        {{{ output.main_content }}}                        
+                        {{{ output.activity_navigation }}}
+                        {{{ output.course_content_footer }}}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{> theme_stellar/footer_front }}
+    </div>
+    {{{ output.standard_after_main_region_html }}}
+</div>
+
+</body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const swiper = new Swiper('.program-slider', {
+            loop: true,
+            slidesPerView: 1,
+            spaceBetween: 20,
+            effect: 'slide',
+            speed: 800,
+            grabCursor: false,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const container = document.querySelector('.animated-heading-container');
+        const headings = document.querySelectorAll('.animated-heading-item');
+        let current = 0;
+
+        function updateContainerHeight() {
+            let maxHeight = 0;
+            headings.forEach(h => {
+                h.style.position = 'relative';
+                maxHeight = Math.max(maxHeight, h.offsetHeight);
+                h.style.position = 'absolute';
+            });
+            container.style.height = maxHeight + 'px';
+        }
+
+        function showNextHeading() {
+            const currentHeading = headings[current];
+            const nextIndex = (current + 1) % headings.length;
+            const nextHeading = headings[nextIndex];
+
+            currentHeading.classList.remove('active');
+            currentHeading.classList.add('out-left');
+
+            nextHeading.classList.remove('out-left');
+            nextHeading.classList.add('active');
+
+            current = nextIndex;
+            setTimeout(showNextHeading, 3000);
+        }
+
+        if (headings.length > 0) {
+            updateContainerHeight();
+            headings[0].classList.add('active');
+            setTimeout(showNextHeading, 3000);
+        }
+
+        window.addEventListener('resize', updateContainerHeight);
+    });
+
+     // Initialize this specific slider using its unique class
+        const photoGallerySwiper = new Swiper('.photo-gallery-slider', {
+            loop: true,
+
+            centeredSlides: true,
+
+            autoplay: {
+              delay: 3000, 
+              disableOnInteraction: false,
+            },
+
+            navigation: {
+                nextEl: '.photo-gallery-slider-container .swiper-button-next',
+                prevEl: '.photo-gallery-slider-container .swiper-button-prev',
+            },
+
+            breakpoints: {
+                320: {
+                    slidesPerView: 1,
+                    spaceBetween: 20
+                },
+                640: {
+                    slidesPerView: 3,
+                    spaceBetween: 20
+                },
+                1024: {
+                    slidesPerView: 5,
+                    spaceBetween: 20
+                }
+            }
+        });
+
+         const testimonialSwiper = new Swiper('.testimonial-swiper', {
+        loop: true,
+        autoplay: {
+          delay: 5000,
+          disableOnInteraction: false,
+        },
+        slidesPerView: 1,
+        spaceBetween: 30,
+
+        // Responsive breakpoints
+        breakpoints: {
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 30
+          },
+          1024: {
+            slidesPerView: 3,
+            spaceBetween: 30
+          }
+        },
+
+        pagination: {
+          el: '.achievements-slider .swiper-pagination',
+          clickable: true,
+        },
+
+        navigation: {
+          nextEl: '.achievements-slider .swiper-button-next',
+          prevEl: '.achievements-slider .swiper-button-prev',
+        },
+      });
+</script>
+{{#js}}
+M.util.js_pending('theme_boost/loader');
+require(['theme_boost/loader', 'theme_boost/drawer'], function(Loader, Drawer) {
+    Drawer.init();
+    M.util.js_complete('theme_boost/loader');
+});
+{{/js}}

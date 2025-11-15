@@ -1,0 +1,135 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost/footer
+
+    Page footer.
+
+    Example context (json):
+    {
+        "output": {
+            "page_doc_link": "Documentation for this page",
+            "supportemail": "<a href=\"#\">Contact site support</a>",
+            "has_popover_links": true,
+            "services_support": "Services and support",
+            "login_info": "You are logged in as cute kitten",
+            "moodle_release": "90210",
+            "has_communication_links": true,
+            "communication_url": "https://element:8081/#/room/#yourroom:synapse",
+            "communication_link": "<a href=\"#\">Communication room</a>"
+        }
+    }
+}}
+
+<footer class="site-footer">
+    <div class="footer-container">
+
+        <div class="footer-column">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="{{{wwwroot}}}/success-stories/">Success Stories</a></li>
+                <li><a href="{{{wwwroot}}}/share-your-story-with-us/">Share Your Story With Us</a></li>
+                <li><a href="{{{wwwroot}}}/financial-aid/">Financial Aid</a></li>
+                <li><a href="{{{wwwroot}}}/employers/">Employers</a></li>
+                <li><a href="{{{wwwroot}}}/career-services/">Career Services</a></li>
+                <li><a href="{{{wwwroot}}}/wioa-grant/">Explore & Apply for WIOA Grant</a></li>
+                <li><a href="{{{wwwroot}}}/net-price-calculator/">Net Price Calculator</a></li>
+                <li><a href="{{{wwwroot}}}/facts-disclosures/">Facts and Disclosures</a></li>
+                <li><a href="{{{wwwroot}}}/apply-online/">Apply Online</a></li>
+                <li><a href="{{{wwwroot}}}/classes-schedule/">Classes Schedule</a></li>
+                <li><a href="{{{wwwroot}}}/wp-content/uploads/2025/05/College-Catalog-2024-2025.12082024.pdf">College Catalogue</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column training-column has-arrows">
+            <h4>Our Training</h4>
+            <ul>
+                <li><a href="{{{wwwroot}}}/magnetic-resonance-imaging-technology/">Magnetic Resonance Imaging Technologist</a></li>
+                <li><a href="{{{wwwroot}}}/surgical-assistant/">Surgical Assistant</a></li>
+                <li><a href="{{{wwwroot}}}/radiologic-technology/">Radiologic Technologist</a></li>
+                <li><a href="{{{wwwroot}}}/diagnostic-medical-sonography/">Diagnostic Medical Sonographer </a></li>
+                <li><a href="{{{wwwroot}}}/echocardiography-noninvasive-cardiovascular-sonographer/">Echocardiography/Noninvasive Cardiovascular Sonographer</a></li>
+                <li><a href="{{{wwwroot}}}/medical-assisting-program-with-phlebotomy-technician/">Medical Assisting with Phlebotomy Technician</a></li>
+                <li><a href="{{{wwwroot}}}/computed-tomography-ct/">Computed Tomography Technologist</a></li>
+                <li><a href="{{{wwwroot}}}/mammography-technologist-mt/">Mammography Technologist</a></li>
+                <li><a href="{{{wwwroot}}}/vascular-sonography-tech-vst/">Vascular Sonography Technologist</a></li>
+                <li><a href="{{{wwwroot}}}/english-as-a-second-language-esl-program/">English as a Second Language (ESL) Course</a></li>
+                <li><a href="{{{wwwroot}}}/international-students/">Information for International Students</a></li>
+                <li><a href="{{{wwwroot}}}/surgical-technologist/">Surgical Technologist</a></li>
+                <li><a href="{{{wwwroot}}}/cyber-security/">Cyber Security Professional</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column has-arrows">
+            <h4>Our Company</h4>
+            <ul>
+                <li><a href="{{{wwwroot}}}/about/">About Us</a></li>
+                <li><a href="{{{wwwroot}}}/faqs/">FAQs</a></li>
+                <li><a href="{{{wwwroot}}}/contact/">Contact Us</a></li>
+                <li><a href="{{{wwwroot}}}/alumni/">Alumni</a></li>
+                <li><a href="{{{wwwroot}}}/terms-and-policies/">Terms and Policies</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h4>Social Media</h4>
+            <div class="social-icons-footer">
+                <a href="https://www.facebook.com/stellarchicago" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/stellarcollegechicago/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/channel/UCPu2BgsFKUqt-rZ3GfxLEGA" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.linkedin.com/company/stellar-career-college-chicago-campus/" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <a href="{{{wwwroot}}}/student-portal/" class="student-portal-btn">Student Portal</a>
+        </div>
+        
+
+    </div>
+
+    <div class="moodle-standard-footer">
+        <div class="footer-container">
+            {{{ output.standard_footer_html }}}
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <div class="footer-bottom-container">
+            <div class="logininfo">
+                {{{ output.login_info }}}
+            </div>
+
+            <p class="copyright-text">All Rights Reserved © Stellar Career College Chicago 2024</p>
+            <p class="design-credit">Developed & Design By PakTaleem.com</p>
+            
+        </div>
+    </div>
+
+    <div class="footer-content-debugging footer-dark bg-dark text-light">
+        <div class="container-fluid footer-dark-inner">
+            {{{ output.debug_footer_html }}}
+        </div>
+    </div>
+
+    {{{ output.standard_end_of_body_html }}}
+</footer>
+
+{{#js}}
+require(['theme_boost/footer-popover'], function(FooterPopover) {
+    // Note: The original popover functionality may not apply to this new static layout.
+    // You may need to adjust or remove this JS depending on your theme's requirements.
+    FooterPopover.init();
+});
+{{/js}}

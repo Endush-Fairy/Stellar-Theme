@@ -1,0 +1,367 @@
+   :root {
+        --primary-color: #96352c;
+        --border-color: #edc6c4;
+        --card-bg: rgba(253, 220, 217, 0.29);
+    }
+
+
+
+    .btn-primary {
+        color: var(--primary-color);
+        border-color: var(--border-color);
+        font-weight: 600;
+        background-color: var(--border-color);
+        padding: 6px 32px;
+    }
+
+    .btn-primary:hover,
+    .btn-primary:active,
+    .btn-primary:focus {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        box-shadow: none;
+    }
+
+    .btn-primary:not(:disabled):not(.disabled).active,
+    .btn-primary:not(:disabled):not(.disabled):active,
+    .show>.btn-primary.dropdown-toggle {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        box-shadow: none !important;
+    }
+
+    .pagelayout-mydashboard h2 {
+        color: #96352c;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .nav_tab_main {
+    max-height: 700px;
+    min-height: 700px !important;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+
+    .nav_tab_main::-webkit-scrollbar {
+        width: 3px;
+        height: 3px;
+
+    }
+
+    .nav_tab_main::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .nav_tab_main::-webkit-scrollbar-thumb {
+        background-color: #96352c;
+        border-radius: 2px;
+        border: none;
+    }
+
+
+
+
+    .nav_tab_main {
+        scrollbar-width: thin;
+        scrollbar-color: #96352c transparent;
+    }
+
+    .nav-pills {
+        justify-content: center;
+        background: #ffffff;
+        border-bottom: 2px solid var(--border-color);
+    }
+
+    .nav-pills .nav-item {
+        margin: 0 0.5rem;
+    }
+    
+    /*Added New*/
+    
+    .nav-pills {
+    justify-content: center;
+    background: #ffffff;
+    border-bottom: 2px solid var(--border-color);
+    background: #ffffff;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+ 
+paste on line 46
+ 
+ 
+#my-tabs-nav {
+    justify-content: start;
+    flex-direction: column;
+    border-right: 2px solid var(--border-color);
+    text-align: start;
+    padding: 0;
+    z-index: 1;
+    top: 58px;
+}
+    
+ /*Endded New*/
+ 
+ 
+ 
+ 
+    .nav-pills .nav-link {
+
+        box-shadow: none !important;
+
+        &.active {
+            box-shadow: none !important;
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+    }
+
+    .nav-pills .nav-link {
+        color: var(--primary-color);
+        font-weight: 600;
+        border: none;
+    }
+
+    button.category-title {
+        margin-top: 0;
+        font-size: 15px;
+        line-height: normal;
+    }
+
+    .category-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-top: 1.5rem;
+    }
+
+    #my-tabs-nav {
+        justify-content: start;
+        flex-direction: column;
+        border-right: 2px solid var(--border-color);
+        text-align: start;
+        padding: 0;
+    }
+
+    #my-tabs-nav li {
+        text-align: start;
+    }
+
+    #my-tabs-nav li button {
+        text-align: start;
+    }
+
+    .lms-offer-card {
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 1.5rem;
+        transition: 0.3s ease;
+        box-shadow: 0 5px 15px rgba(150, 53, 44, 0.05);
+        height: 100%;
+    }
+
+    .lms-offer-card:hover {
+        box-shadow: 0 8px 25px rgba(150, 53, 44, 0.2);
+        transform: translateY(-4px);
+    }
+
+    .lms-offer-title {
+        color: var(--primary-color);
+        font-size: 17px;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .lms-offer-desc {
+        font-size: 0.90rem;
+        color: #5a2c28;
+        margin-bottom: 1rem;
+    }
+
+    .download-link {
+        color: var(--primary-color);
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .download-link:hover {
+        text-decoration: underline;
+    }
+
+    .pagelayout-mydashboard .tab-pane .row {
+        row-gap: 24px;
+    }
+
+    .nav-pills .nav-link.active {
+        background-color: var(--primary-color);
+        color: #fff;
+    }
+
+    .nav-pills .nav-link {
+        color: var(--primary-color);
+        font-weight: 600;
+    }
+
+    .dropdown-item {
+        color: var(--primary-color);
+        font-weight: 600;
+    }
+
+    .dropdown-item.active,
+    .dropdown-item:active {
+        background-color: var(--primary-color);
+        color: #fff;
+    }
+
+    .pagelayout-mydashboard .card-text .no-overflow {
+        overflow: unset;
+    }
+
+    @media (max-width: 1199px) {
+        .pagelayout-mydashboard h2 {
+            margin-bottom: 1.5rem;
+            font-size: 32px;
+        }
+    }
+
+    @media (max-width: 1099px) {
+        .nav-pills .nav-link {
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width: 991px) {
+        .nav-pills .nav-item {
+            margin: 0;
+        }
+
+        .nav-pills .nav-link {
+            font-size: 13px;
+            padding: 7px 15px;
+        }
+
+        .category-title {
+            font-size: 13px;
+            margin-top: 20px;
+        }
+
+        .lms-offer-title {
+            font-size: 14px;
+            line-height: normal;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .dropdown-menu {
+            width: 100% !important;
+            min-width: unset;
+            left: 0 !important;
+            right: 0 !important;
+            padding: 0;
+        }
+
+        .pagelayout-mydashboard h2 {
+            font-size: 28px;
+        }
+
+        .lms-offer-card {
+            padding: 20px 13px;
+        }
+
+        .lms-offer-title {
+            font-size: 16px;
+            line-height: 21px;
+        }
+
+        .lms-offer-desc {
+            font-size: 14px;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+            transform: translate(0) !important;
+            transform: translateX(0) !important;
+            width: 100% !important;
+            margin-top: 44px;
+        }
+
+        .main-tab-menu {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .main-tab-menu>a {
+            margin-bottom: 0 !important;
+            width: fit-content;
+        }
+
+        .main-tab-menu a+a {
+            margin-bottom: 0 !important;
+            width: 100%;
+            padding: 8px 24px;
+        }
+
+        .main-tab-menu a {
+            padding: 8px 24px;
+            font-size: 13px;
+        }
+
+        .dropdown-toggle {
+            height: 100%;
+        }
+
+        .dropdown-item:focus,
+        .dropdown-item:hover {
+            color: var(--primary-color);
+            background-color: var(--border-color);
+        }
+
+        #my-tabs-nav li button {
+            text-align: start;
+            background: white;
+            color: var(--primary-color);
+            padding: 0;
+            margin-bottom: 11px;
+
+            &.active {
+                color: #000000;
+            }
+        }
+    }
+
+    @media (max-width: 575px) {
+        .pagelayout-mydashboard h2 {
+            font-size: 23px;
+        }
+
+        .pagelayout-mydashboard .tab-pane .row {
+            row-gap: 10px;
+        }
+
+        .download-link {
+            font-size: 14px;
+        }
+
+        .category-title {
+            font-size: 12px;
+        }
+
+        #my-tabs-nav li {
+            padding-left: 10px;
+        }
+
+        .pagelayout-mydashboard .h2 {
+            margin-bottom: 13px;
+        }
+
+
+
+    }
+
+
+    
